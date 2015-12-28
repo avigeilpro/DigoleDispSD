@@ -2,7 +2,7 @@
 #define DigoleSerialDisp_h
 
 #include "application.h"
-#include "sd-card-library-photon-compat/sd-card-library-photon-compat.h"
+#include "sd-card-library-photon-compat.h"
 
 #define _TEXT_ 0
 #define _GRAPH_ 1

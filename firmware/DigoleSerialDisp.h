@@ -2,7 +2,6 @@
 #define DigoleSerialDisp_h
 
 #include "application.h"
-#include "sd-card-library-photon-compat.h"
 
 #define _TEXT_ 0
 #define _GRAPH_ 1
@@ -18,11 +17,10 @@ public:
 void begin(void) {
 }
 
-DigoleSerialDisp(uint8_t pin_data, uint8_t pin_clock, uint8_t pin_SS, uint8_t pin_SI,uint8_t pin_SD) {
+DigoleSerialDisp(uint8_t pin_data, uint8_t pin_clock, uint8_t pin_SS, uint8_t pin_SI) {
         _Clockpin = pin_clock;
         _Datapin = pin_data;
         _SSpin = pin_SS;
-        _SS_SD_pin = pin_SD;
         _SIpin = pin_SI;
         pinMode(_Clockpin, OUTPUT);
         pinMode(_Datapin, OUTPUT);
@@ -154,10 +152,6 @@ size_t print(const int num){
     void runCommandSet(unsigned long int addr);
     size_t read(void);
 
-    //memory card functions
-    bool SD_begin(void);
-    int WriteFile(char *FName, String Text, int Final);
-    
     void write2B(unsigned int v);
     //--- new function on V3.0 firmware ----//
 
@@ -230,8 +224,6 @@ private:
     uint8_t _SSpin;
     uint8_t _SIpin;
     uint8_t _Comdelay;
-    uint8_t _SS_SD_pin;
-    File myFile;
 
 };
 #endif

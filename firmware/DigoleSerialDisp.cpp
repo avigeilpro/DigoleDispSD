@@ -444,27 +444,4 @@ void DigoleSerialDisp::runCommandSet(unsigned long int addr) {
     write(addr);
 }
 
-bool DigoleSerialDisp::SD_begin(void){
-    return SD.begin(_Datapin, _SIpin, _Clockpin, _SS_SD_pin);
-}
-    
-int DigoleSerialDisp::WriteFile(char *FName, String Text, int Final)
-    {
-      // open the file. note that only one file can be open at a time,
-      // so you have to close this one before opening another.
-      myFile = SD.open(FName, FILE_WRITE);
-    
-    // if the file opened okay, write to it:
-      if (myFile) {
-        if (Final){
-            myFile.println(Text);
-        } else {
-            myFile.print(Text);
-        }
-      // close the file:
-        myFile.close();
-        return 1;
-      } else {
-        return 0;
-      }
 }

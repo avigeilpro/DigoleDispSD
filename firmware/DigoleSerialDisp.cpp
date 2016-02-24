@@ -443,5 +443,3 @@ void DigoleSerialDisp::runCommandSet(unsigned long int addr) {
     write(addr >> 8);
     write(addr);
 }
-
-}

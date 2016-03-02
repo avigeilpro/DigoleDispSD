@@ -39,7 +39,7 @@ size_t write(uint8_t value){
     shiftOut(_Datapin, _Clockpin, MSBFIRST, value);
     delayMicroseconds(1);
     digitalWrite(_SSpin, HIGH);
-    delay(1);
+    delay(3);
     return 1;
 }
 

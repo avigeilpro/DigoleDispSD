@@ -225,4 +225,6 @@ private:
     uint8_t _Comdelay;
 
 };
+
+extern DigoleSerialDisp Display;
 #endif

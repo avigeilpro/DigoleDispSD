@@ -14,6 +14,8 @@
 class DigoleSerialDisp : public Print {
 public:
 
+DigoleSerialDisp() {}
+
 void begin(uint8_t pin_data, uint8_t pin_clock, uint8_t pin_SS, uint8_t pin_SI) {
         _Clockpin = pin_clock;
         _Datapin = pin_data;
@@ -31,15 +33,13 @@ void begin(uint8_t pin_data, uint8_t pin_clock, uint8_t pin_SS, uint8_t pin_SI) 
         _Comdelay = 6;
 }
 
-DigoleSerialDisp() {}
-
 size_t write(uint8_t value){
     digitalWrite(_SSpin, LOW);
     delayMicroseconds(1);
     shiftOut(_Datapin, _Clockpin, MSBFIRST, value);
     delayMicroseconds(1);
     digitalWrite(_SSpin, HIGH);
-    delay(2);
+    delay(1);
     return 1;
 }
 

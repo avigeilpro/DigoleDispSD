@@ -21,7 +21,7 @@ public:
     void drawAll(void);
     int CheckButtons(void (*but_click)(int),void (*out_but)(int,int));
     int BackColor=0;
-    DigoleSerialDisp *mydisp;
+    //DigoleSerialDisp *mydisp;
 };
 
 

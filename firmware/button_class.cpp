@@ -114,7 +114,7 @@ void Button::changetext(int num, char *text){
     }
 }
 
-void Button::changecolor(int num, int color[2]){
+void Button::changecolor(int num, int *color){
     but_color[num][0]=color[0];
     but_color[num][1]=color[1];
 }

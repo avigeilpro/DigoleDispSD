@@ -112,8 +112,13 @@ void Button::changetext(int num, char *text){
     for (int i=0;i<20;i++){
         but_text[num][i]=text[i];
     }
-
 }
+
+void Button::changecolor(int num, int color[2]){
+    but_color[num][0]=color[0];
+    but_color[num][1]=color[1];
+}
+
 int Button::CheckButtons(void (*but_click)(int),void (*out_but)(int,int)){
     
     int x,y,a,b,c,d;

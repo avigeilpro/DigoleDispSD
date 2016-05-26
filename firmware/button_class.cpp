@@ -108,7 +108,12 @@ void Button::drawClick(int num){
         Display.setColor(1);
 
 }
+void changetext(int num, char *text){
+    for (int i=0;i<20;i++){
+        but_text[num][i]=text[i];
+    }
 
+}
 int Button::CheckButtons(void (*but_click)(int),void (*out_but)(int,int)){
     
     int x,y,a,b,c,d;

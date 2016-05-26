@@ -20,6 +20,7 @@ public:
     void drawClick(int num);
     void drawAll(void);
     void changetext(int num, char *text);
+    void changecolor(int num, int color[2]);
     int CheckButtons(void (*but_click)(int),void (*out_but)(int,int));
     int BackColor=0;
     //DigoleSerialDisp *mydisp;

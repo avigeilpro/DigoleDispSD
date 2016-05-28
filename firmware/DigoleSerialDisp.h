@@ -35,11 +35,11 @@ void begin(uint8_t pin_data, uint8_t pin_clock, uint8_t pin_SS, uint8_t pin_SI) 
 
 size_t write(uint8_t value){
     digitalWrite(_SSpin, LOW);
-    delayMicroseconds(1);
+    delayMicroseconds(4);
     shiftOut(_Datapin, _Clockpin, MSBFIRST, value);
-    delayMicroseconds(1);
+    delayMicroseconds(4);
     digitalWrite(_SSpin, HIGH);
-    delay(3);
+    delay(4);
     return 1;
 }
 

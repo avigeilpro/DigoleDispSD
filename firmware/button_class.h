@@ -4,27 +4,42 @@
 #include "application.h"
 #include "DigoleSerialDisp.h"
 
-class Button {
+struct coord {
+    int x;
+    int y;
+};
+
+struct button {
+    coord position;
+    coord size;
+    const uint8_t *graph;
+    coord gsize;
+    char text[20];
+    int tsize;
+    coord offset;
+    int color;
+    int bcolor;
+    bool enable;
+};
+
+class NButton {
 private:
-    int but_cord[10][4];
-    char but_text[10][20];
-    int but_text_pos[10][3];
-    int but_color[10][2];
-    int but_count;
+    button buttons[10];
+    int count;
 protected:
     
 public:
-    Button();
-    void init(int count,int *cord,char *text,int *position,int *color);
+    void addbutton(int x,int y,int w,int h,const uint8_t *graph,int gx,int gy,char *text,int ox,int oy,int tsize,int color,int bcolor);
     void draw(int num);
     void drawClick(int num);
     void drawAll(void);
     void changetext(int num, char *text);
     void changecolor(int num, int text_color, int back_color);
     int CheckButtons(void (*but_click)(int),void (*out_but)(int,int));
+    void reset();
+    
     int BackColor=0;
-    //DigoleSerialDisp *mydisp;
+    NButton();
 };
-
 
 #endif

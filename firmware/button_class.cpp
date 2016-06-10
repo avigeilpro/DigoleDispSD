@@ -135,7 +135,7 @@ void NButton::drawClick(int num){
 }
 void NButton::changetext(int num, char *text){
 
-    size_t destination_size = sizeof (text);
+    size_t destination_size = strlen(text);
     strncpy(buttons[num].text,text, destination_size);
     buttons[num].text[destination_size] = '\0';
 }
@@ -190,3 +190,5 @@ Serial.println("c");
 //Serial.println("e");
     return but;
 }
+
+NButton Buttons

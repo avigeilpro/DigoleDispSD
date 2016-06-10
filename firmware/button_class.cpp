@@ -1,48 +1,48 @@
 #include "button_class.h"
-Button::Button(){
+NButton::NButton(){
+    count=0;
     }
-void Button::init(int count,int *cord,char *text,int *position,int *color){
-    but_count=count;
-    for (int j=0;j<count;j++){
-        for (int i=0;i<4;i++){
-            but_cord[j][i]=cord[i+j*4];
-        }
-    }
-    for (int j=0;j<count;j++){
-        for (int i=0;i<20;i++){
-            but_text[j][i]=text[i+j*20];
-        }
-    }
-        
-            
-    for (int j=0;j<count;j++){
-        for (int i=0;i<3;i++){
-            but_text_pos[j][i]=position[i+j*3];
-        }
-    }
+
+void NButton::reset(){
+    count=0;
+}
+void NButton::addbutton(int x,int y,int w,int h,const uint8_t *graph,int gx,int gy,char *text,int ox,int oy,int tsize,int color,int bcolor){
+    buttons[count].position.x = x;
+    buttons[count].position.y = y;
+    buttons[count].size.x = w;
+    buttons[count].size.y = h;
+    buttons[count].graph = graph;
+    buttons[count].gsize.x = gx;
+    buttons[count].gsize.y = gy;
+    buttons[count].tsize = tsize;
+    buttons[count].offset.x = ox;
+    buttons[count].offset.y = oy;
+    buttons[count].color = color;
+    buttons[count].bcolor = bcolor;
     
-    for (int j=0;j<count;j++){
-        for (int i=0;i<2;i++){
-            but_color[j][i]=color[i+j*2];
-        }
-    }
+    size_t destination_size = sizeof (text);
+    strncpy(buttons[count].text,text, destination_size);
+    buttons[count].text[destination_size] = '\0';
+    
+    count++;
 }
 
-void Button::drawAll(void){
-    for (int i=0; i<but_count;i++){
-        draw(i);
-    }
-}
-
-void Button::draw(int num){
+void NButton::draw(int num){
         
-        int x=but_cord[num][0];
-        int y=but_cord[num][1];
-        int w=but_cord[num][2];
-        int h=but_cord[num][3];
+        int x=buttons[num].position.x;
+        int y=buttons[num].position.y;
+        int w=buttons[num].size.x;
+        int h=buttons[num].size.y;
 
-        int btnbackColor=but_color[num][0];
-        int btnColor=but_color[num][1];
+        int gx = buttons[num].gsize.x;
+        int gy = buttons[num].gsize.y;
+
+        int btnbackColor=buttons[num].bcolor;
+        int btnColor=buttons[num].color;
+        
+        int offsetx=buttons[num].offset.x;
+        int offsety=buttons[num].offset.y;
+        int FontSize=buttons[num].tsize;
         
         Display.setColor(btnColor);
         Display.drawBox(x,y,w,h);
@@ -57,89 +57,123 @@ void Button::draw(int num){
         Display.setColor(btnColor);
         Display.setBgColor();
         Display.setColor(btnbackColor);
-        Display.setFont(but_text_pos[num][2]);
-        Display.drawAbsStr(x+but_text_pos[num][0],y+but_text_pos[num][1],but_text[num]);
+        if (buttons[num].graph == NULL){
+            Display.setFont(FontSize);
+            Display.drawAbsStr(x+offsetx,y+offsety,buttons[num].text);
+        } else {
+            Display.drawBitmap(x+offsetx,y+offsety,gx,gy,buttons[num].graph);
+        }
         
         Display.setColor(BackColor);
         Display.setBgColor();
         Display.setColor(1);
 
 }
-void Button::drawClick(int num){
-        
-        int x=but_cord[num][0];
-        int y=but_cord[num][1];
-        int w=but_cord[num][2];
-        int h=but_cord[num][3];
-        int btnColor=but_color[num][1];
 
-        Display.setColor(0);
-        Display.drawFrame(x + 5,y + 5,w - 10,h - 10);
-        
-        Display.drawLine(x + 1,y+1,x + 5,y + 5);
-        Display.drawLine(x+w-1,y+1,x+w - 5,y + 5);
-        Display.drawLine(x+1,y+h-1,x+5,y+h-5);
-        Display.drawLine(x+w-1,y+h-1,x+w-5,y+h-5);
-        
-        Display.setColor(btnColor);
-        Display.setBgColor();
-        Display.setColor(0);
-        Display.setFont(but_text_pos[num][2]);
-        Display.drawAbsStr(x+but_text_pos[num][0],y+but_text_pos[num][1],but_text[num]);
-        
-        delay(100);
-        
-        Display.setColor(0x6F);
-        Display.drawFrame(x + 5,y + 5,w - 10,h - 10);
-        
-        Display.drawLine(x + 1,y+1,x + 5,y + 5);
-        Display.drawLine(x+w-1,y+1,x+w - 5,y + 5);
-        Display.drawLine(x+1,y+h-1,x+5,y+h-5);
-        Display.drawLine(x+w-1,y+h-1,x+w-5,y+h-5);
-        
-        Display.setColor(btnColor);
-        Display.setBgColor();
-        Display.setColor(0x6F);
-        Display.setFont(but_text_pos[num][2]);
-        Display.drawAbsStr(x+but_text_pos[num][0],y+but_text_pos[num][1],but_text[num]);
-        
-        Display.setColor(BackColor);
-        Display.setBgColor();
-        Display.setColor(1);
-
-}
-void Button::changetext(int num, char *text){
-    for (int i=0;i<20;i++){
-        but_text[num][i]=text[i];
+void NButton::drawAll(void){
+    for (int i=0; i<count;i++){
+        draw(i);
     }
 }
 
-void Button::changecolor(int num, int text_color, int back_color){
-    but_color[num][0]=text_color;
-    but_color[num][1]=back_color;
+void NButton::drawClick(int num){
+        
+        int x=buttons[num].position.x;
+        int y=buttons[num].position.y;
+        int w=buttons[num].size.x;
+        int h=buttons[num].size.y;
+
+        int btnbackColor=buttons[num].bcolor;
+        int btnColor=buttons[num].color;
+
+        int offsetx=buttons[num].offset.x;
+        int offsety=buttons[num].offset.y;
+        int FontSize=buttons[num].tsize;
+
+        Display.setColor(0);
+        Display.drawFrame(x + 5,y + 5,w - 10,h - 10);
+        
+        Display.drawLine(x + 1,y+1,x + 5,y + 5);
+        Display.drawLine(x+w-1,y+1,x+w - 5,y + 5);
+        Display.drawLine(x+1,y+h-1,x+5,y+h-5);
+        Display.drawLine(x+w-1,y+h-1,x+w-5,y+h-5);
+        
+        Display.setColor(btnColor);
+        Display.setBgColor();
+        Display.setColor(0);
+        if (buttons[num].graph == NULL){
+            Display.setFont(FontSize);
+            Display.drawAbsStr(x+offsetx,y+offsety,buttons[num].text);
+        } else {
+            //Display.drawBitmap(x,y,offsetx,offsety,buttons[num].graph);
+        }
+
+        delay(100);
+        
+        Display.setColor(btnbackColor);
+        Display.drawFrame(x + 5,y + 5,w - 10,h - 10);
+        
+        Display.drawLine(x + 1,y+1,x + 5,y + 5);
+        Display.drawLine(x+w-1,y+1,x+w - 5,y + 5);
+        Display.drawLine(x+1,y+h-1,x+5,y+h-5);
+        Display.drawLine(x+w-1,y+h-1,x+w-5,y+h-5);
+        
+        Display.setColor(btnColor);
+        Display.setBgColor();
+        Display.setColor(btnbackColor);
+        if (buttons[num].graph == NULL){
+            Display.setFont(FontSize);
+            Display.drawAbsStr(x+offsetx,y+offsety,buttons[num].text);
+        } else {
+            //Display.drawBitmap(x,y,offsetx,offsety,buttons[num].graph);
+        }
+        
+        Display.setColor(BackColor);
+        Display.setBgColor();
+        Display.setColor(1);
+
+}
+void NButton::changetext(int num, char *text){
+
+    size_t destination_size = sizeof (text);
+    strncpy(buttons[num].text,text, destination_size);
+    buttons[num].text[destination_size] = '\0';
 }
 
-int Button::CheckButtons(void (*but_click)(int),void (*out_but)(int,int)){
+void NButton::changecolor(int num, int text_color, int back_color){
+    buttons[num].color=text_color;
+    buttons[num].bcolor=back_color;
+}
+
+int NButton::CheckButtons(void (*but_click)(int),void (*out_but)(int,int)){
     
     int x,y,a,b,c,d;
     int but=-1;
+    //Serial.println("a");
     Display.readTouchScreen();
-
+    Serial.println("b");
+    delay(1);
     x = Display.read1() << 8;
+    delay(1);
     x |= Display.read1();
+    delay(1);
     y = Display.read1() << 8;
+    delay(1);
     y |= Display.read1();
+    delay(1);
+Serial.println("c");
 
     //évite le plantage
     Display.write((uint8_t)0);
 
+//Serial.println("d");
     //click sur l'écran
     if ((x<320)&&(y<240)){
-        for (int i=0; i<but_count;i++){
-            a=but_cord[i][0];
-            b=but_cord[i][1];
-            c=but_cord[i][2];
-            d=but_cord[i][3];
+        for (int i=0; i<count;i++){
+            a=buttons[i].position.x;
+            b=buttons[i].position.y;
+            c=buttons[i].size.x;
+            d=buttons[i].size.y;
             if ((x>=a)&&(x<=(a+c))&&(y>=b)&&(y<=(b+d))){
                 but=i;
                 break;
@@ -153,5 +187,6 @@ int Button::CheckButtons(void (*but_click)(int),void (*out_but)(int,int)){
             out_but(x,y);
         }
     }
+//Serial.println("e");
     return but;
 }

@@ -42,4 +42,5 @@ public:
     NButton();
 };
 
+extern NButton Buttons;
 #endif

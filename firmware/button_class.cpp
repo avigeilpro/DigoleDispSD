@@ -20,7 +20,7 @@ void NButton::addbutton(int x,int y,int w,int h,const uint8_t *graph,int gx,int 
     buttons[count].color = color;
     buttons[count].bcolor = bcolor;
     
-    size_t destination_size = sizeof (text);
+    size_t destination_size = strlen(text);
     strncpy(buttons[count].text,text, destination_size);
     buttons[count].text[destination_size] = '\0';
     

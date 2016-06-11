@@ -151,17 +151,15 @@ int NButton::CheckButtons(void (*but_click)(int),void (*out_but)(int,int)){
     int but=-1;
     //Serial.println("a");
     Display.readTouchScreen();
-    Serial.println("b");
-    delay(1);
+    delay(15);
     x = Display.read1() << 8;
-    delay(1);
+    delay(15);
     x |= Display.read1();
-    delay(1);
+    delay(15);
     y = Display.read1() << 8;
-    delay(1);
+    delay(15);
     y |= Display.read1();
-    delay(1);
-Serial.println("c");
+    delay(15);
 
     //évite le plantage
     Display.write((uint8_t)0);

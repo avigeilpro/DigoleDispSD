@@ -1,5 +1,5 @@
 //Digole Digital Solutions: www.digole.com
-#include "DigoleSerialDisp.h"
+#include "DigoleDisp.h"
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>

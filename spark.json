@@ -1,7 +1,7 @@
 {
-  "name": "DigoleSerialDisp",
+  "name": "DigoleDisp",
   "author": "avigeilpro",
   "license": "GPL v3",
   "version": "0.0.2",
-  "description": "Digole Display and SD card reader"
+  "description": "Digole Display"
 }
